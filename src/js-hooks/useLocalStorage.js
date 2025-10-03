@@ -23,14 +23,14 @@ export const useLocalStorage = (key, initialValue) => {
     }, [key, state])
 
     const setLocalState = useCallback((value => {
-        setState (value => {
-            const newValue = value instanceof Function ? value(state) : value
+        setState ((prev) => {
+            const newValue = value instanceof Function ? value(prev) : value
             try {
                 if (typeof window !== "undefined" ){
                     localStorage.setItem(key, JSON.stringify(newValue))
                 }
             }catch (err){
-                console.error("useLocalStorage set error:". err)
+                console.error("useLocalStorage set error:", err)
             }
             return newValue
         })
