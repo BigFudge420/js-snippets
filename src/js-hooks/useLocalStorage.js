@@ -3,13 +3,15 @@ import {useState, useEffect, useCallback} from "react";
 export const useLocalStorage = (key, initialValue) => {
     const [state, setState] = useState(() => {
         try {
-            if (typeof window === "undefined") return initialValue
-
+            if (typeof window === "undefined") {
+                return typeof initialValue === 'function'? initialValue() : initialValue
+            }
             const item = localStorage.getItem(key)
-            return item ? JSON.parse(item) : initialValue
+            if(item) return JSON.parse(item)
+            return typeof initialValue === 'function'? initialValue() : initialValue    
         }catch (err){
             console.error("Error reading localStorage key:", err)
-            return initialValue 
+            return typeof initialValue === 'function'? initialValue() : initialValue 
         }
     })
 
