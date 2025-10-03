@@ -17,6 +17,8 @@ A curated collection of reusable JavaScript snippets and React components for mo
 src/
 ├── array-methods/          # Array utility functions and methods
 ├── string-methods/         # String manipulation utilities
+├── js-hooks/               # Reusable React hooks
+│   └── useLocalStorage.js  # Simple localStorage hook
 └── react-components/       # Reusable React components
     ├── cacheContext.jsx    # Context for caching functionality (deprecated)
     └── localContext.jsx    # Centralized localStorage management
@@ -70,6 +72,34 @@ npm run dev
 
 ## 📚 Components & Utilities
 
+### useLocalStorage Hook
+
+A simple, traditional localStorage hook that syncs state with localStorage. Perfect for straightforward use cases.
+
+**Location**: `src/js-hooks/useLocalStorage.js`
+
+**Features**: SSR-safe, automatic sync, error handling, supports function updates
+
+**Usage**:
+```jsx
+import { useLocalStorage } from './js-hooks/useLocalStorage';
+
+function UserSettings() {
+  const [user, setUser] = useLocalStorage('user', { name: '', theme: 'light' });
+  const [count, setCount] = useLocalStorage('count', 0);
+
+  return (
+    <div>
+      <input 
+        value={user.name} 
+        onChange={(e) => setUser({ ...user, name: e.target.value })} 
+      />
+      <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
+    </div>
+  );
+}
+```
+
 ### LocalContext
 
 Centralized localStorage management with automatic expiration. Trades simplicity for centralization and helper methods.
@@ -92,6 +122,8 @@ const data = get('key');    // Get data or null if expired
 if (isValid('key')) { ... } // Check if still valid
 clear('key');               // Remove data
 ```
+
+**Comparison**: useLocalStorage hook = simplicity, LocalContext = centralization + expiration
 
 ## 🤝 Contributing
 
