@@ -11,6 +11,17 @@ A curated collection of reusable JavaScript snippets and React components for mo
 - **ESLint**: Code quality and consistency
 - **TypeScript Support**: Full TypeScript integration
 
+## 📁 Project Structure
+
+```
+src/
+├── array-methods/          # Array utility functions and methods
+├── string-methods/         # String manipulation utilities
+└── react-components/       # Reusable React components
+    ├── cacheContext.jsx    # Context for caching functionality (deprecated)
+    └── localContext.jsx    # Centralized localStorage management
+```
+
 
 ## 🛠️ Tech Stack
 
@@ -57,6 +68,31 @@ npm run dev
 | `npm run preview` | Preview the production build locally |
 | `npm run lint` | Run ESLint to check for code issues |
 
+## 📚 Components & Utilities
+
+### LocalContext
+
+Centralized localStorage management with automatic expiration. Trades simplicity for centralization and helper methods.
+
+**Location**: `src/react-components/localContext.jsx`
+
+**Features**: Auto-expiration (60s), error handling, `get`, `set`, `isValid`, `clear` methods
+
+**Usage**:
+```jsx
+// Wrap app
+<LocalProvider>
+  <App />
+</LocalProvider>
+
+// Use in components
+const { get, set, isValid, clear } = useLocalStorage();
+set('key', data);           // Store with expiration
+const data = get('key');    // Get data or null if expired
+if (isValid('key')) { ... } // Check if still valid
+clear('key');               // Remove data
+```
+
 ## 🤝 Contributing
 
 This is a personal snippets repository, but suggestions and improvements are welcome!
@@ -87,14 +123,27 @@ This project follows these conventions:
 
 This project is private and for personal use.
 
+### Array Methods
+Collection of utility functions for array manipulation and processing.
+
+**Location**: `src/array-methods/`
+**Status**: 🚧 Coming soon
+
+### String Methods  
+Helper functions for string manipulation, formatting, and validation.
+
+**Location**: `src/string-methods/`
+**Status**: 🚧 Coming soon
+
 ## 🚧 Roadmap
 
+- [x] **LocalContext Component** - Centralized localStorage management ✅
 - [ ] Add more React components (forms, modals, buttons)
 - [ ] Expand array utility functions
 - [ ] Add string validation helpers
-- [ ] Create component documentation
-- [ ] Add unit tests
+- [ ] Add unit tests for LocalContext
 - [ ] Set up Storybook for component showcase
+- [ ] Create TypeScript versions of components
 
 ---
 
