@@ -22,7 +22,8 @@ src/
 ├── array-methods/          # Array utility functions and methods
 ├── string-methods/         # String manipulation utilities
 ├── core-js/                # Core JavaScript utility functions
-│   └── debounce.js         # Debounce function utility
+│   ├── debounce.js         # Debounce function utility
+│   └── throttle.js         # Throttle function utility
 ├── dom-helpers/            # DOM utility functions
 │   └── copyToClipboard.js  # Vanilla JS copy to clipboard utility
 ├── react-hooks/            # Reusable React hooks
@@ -113,6 +114,16 @@ Vanilla JavaScript debounce function to limit function execution frequency.
 **Location**: `src/core-js/debounce.js`
 
 **Features**: Function debouncing, preserves `this` context, handles arguments
+
+### throttle Utility
+
+Vanilla JavaScript throttle function to limit how often a function can run. Preserves `this` and arguments. Returns a simple throttled function; consider adding a `.cancel()` method in the utility if you need cleanup support.
+
+**Location**: `src/core-js/throttle.js`
+
+**Features**: Function throttling, preserves `this`, simple API, framework-agnostic
+
+React note: keep core utilities pure. If you need a hook-friendly version (stable identity, cleanup, latest callback), wrap this utility in a React hook such as `useThrottledCallback` in `src/react-hooks/`.
 
 ### copyToClipboard Utility
 
