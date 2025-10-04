@@ -125,6 +125,10 @@ Vanilla JavaScript throttle function to limit how often a function can run. Pres
 
 React note: keep core utilities pure. If you need a hook-friendly version (stable identity, cleanup, latest callback), wrap this utility in a React hook such as `useThrottledCallback` in `src/react-hooks/`.
 
+### deepClone Utility
+
+Robust deep-cloning utility for plain objects, arrays, Maps, Sets, Dates, RegExps and typed arrays. Handles circular references and preserves prototypes and property descriptors where possible. Framework-agnostic.
+
 ### copyToClipboard Utility
 
 Vanilla JavaScript function to copy text to clipboard. Promise-based with fallback support.
