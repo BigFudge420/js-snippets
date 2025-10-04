@@ -90,26 +90,6 @@ A simple, traditional localStorage hook that syncs state with localStorage. Perf
 
 **Features**: SSR-safe, automatic sync, error handling, supports function updates
 
-**Usage**:
-```jsx
-import { useLocalStorage } from './react-hooks/useLocalStorage';
-
-function UserSettings() {
-  const [user, setUser] = useLocalStorage('user', { name: '', theme: 'light' });
-  const [count, setCount] = useLocalStorage('count', 0);
-
-  return (
-    <div>
-      <input 
-        value={user.name} 
-        onChange={(e) => setUser({ ...user, name: e.target.value })} 
-      />
-      <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
-    </div>
-  );
-}
-```
-
 ### useCopyToClipboard Hook
 
 Copy text to clipboard with fallback support for older browsers. Provides copy status feedback.
@@ -117,22 +97,6 @@ Copy text to clipboard with fallback support for older browsers. Provides copy s
 **Location**: `src/react-hooks/useCopyToClipboard.js`
 
 **Features**: Modern Clipboard API, fallback for older browsers, copy status tracking
-
-**Usage**:
-```jsx
-import { useCopytoClipboard } from './react-hooks/useCopyToClipboard';
-
-function ShareButton() {
-  const textToCopy = "https://example.com/share";
-  const [isCopied, copy] = useCopytoClipboard(textToCopy);
-
-  return (
-    <button onClick={copy}>
-      {isCopied ? 'Copied!' : 'Copy Link'}
-    </button>
-  );
-}
-```
 
 ### useDebounce Hook
 
@@ -142,31 +106,6 @@ Debounce state values to prevent excessive updates. Ideal for search inputs and 
 
 **Features**: State debouncing, automatic cleanup, customizable delay
 
-**Usage**:
-```jsx
-import { useDebounce } from './react-hooks/useDebounce';
-
-function SearchInput() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearch = useDebounce(searchTerm, 500);
-
-  useEffect(() => {
-    if (debouncedSearch) {
-      // API call only triggers after 500ms of no typing
-      searchAPI(debouncedSearch);
-    }
-  }, [debouncedSearch]);
-
-  return (
-    <input
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      placeholder="Search..."
-    />
-  );
-}
-```
-
 ### debounce Utility
 
 Vanilla JavaScript debounce function to limit function execution frequency.
@@ -174,27 +113,6 @@ Vanilla JavaScript debounce function to limit function execution frequency.
 **Location**: `src/core-js/debounce.js`
 
 **Features**: Function debouncing, preserves `this` context, handles arguments
-
-**Usage**:
-```javascript
-import { debounce } from './core-js/debounce';
-
-// Debounce a function
-const debouncedSave = debounce((data) => {
-  console.log('Saving:', data);
-}, 1000);
-
-// Use in event handlers
-window.addEventListener('resize', debounce(() => {
-  console.log('Window resized');
-}, 250));
-
-// Debounce API calls
-const debouncedSearch = debounce(async (query) => {
-  const results = await fetch(`/api/search?q=${query}`);
-  return results.json();
-}, 300);
-```
 
 ### copyToClipboard Utility
 
@@ -204,25 +122,17 @@ Vanilla JavaScript function to copy text to clipboard. Promise-based with fallba
 
 **Features**: Promise-based, modern Clipboard API, fallback for older browsers, return status
 
-**Usage**:
-```javascript
-import { copyToClipboard } from './dom-helpers/copyToClipboard';
-
-// Basic usage
-copyToClipboard('Hello World!')
-  .then(() => console.log('Copy successful'))
-  .catch(() => console.log('Copy failed'));
-
-// In event handler
-async function handleCopy() {
-  const success = await copyToClipboard(document.getElementById('text').value);
-  if (success) {
-    alert('Copied!');
-  }
-}
-```
-
 ### LocalContext
+
+### CopyButton Component
+
+Simple React component that provides an input and a copy button. Uses the `useCopyToClipboard` hook and Tailwind utility classes for styling.
+
+**Location**: `src/react-components/copyButton.jsx`
+
+**Features**: Controlled input, copy feedback (changes button color/text), Tailwind-based styles
+
+Note: Tailwind classes are used — make sure `src/output.css` (Tailwind build output) is imported in your app entry so classes apply at runtime.
 
 Centralized localStorage management with automatic expiration. Trades simplicity for centralization and helper methods.
 
