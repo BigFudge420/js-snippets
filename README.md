@@ -5,6 +5,9 @@ A curated collection of reusable JavaScript snippets and React components for mo
 ## 🚀 Features
 
 - **React Components**: Reusable UI components built with React 19
+- **React Hooks**: Custom hooks for common functionality
+- **DOM Utilities**: Vanilla JavaScript helper functions for DOM operations
+- **localStorage Solutions**: Both simple hooks and centralized context management
 - **JavaScript Utilities**: Helper functions for arrays, strings, and more
 - **Modern Tooling**: Vite for fast development and building
 - **TailwindCSS**: Utility-first CSS framework for styling
@@ -17,8 +20,11 @@ A curated collection of reusable JavaScript snippets and React components for mo
 src/
 ├── array-methods/          # Array utility functions and methods
 ├── string-methods/         # String manipulation utilities
-├── js-hooks/               # Reusable React hooks
-│   └── useLocalStorage.js  # Simple localStorage hook
+├── dom-helpers/            # DOM utility functions
+│   └── copyToClipboard.js  # Vanilla JS copy to clipboard utility
+├── react-hooks/            # Reusable React hooks
+│   ├── useLocalStorage.js  # Simple localStorage hook
+│   └── useCopyToClipboard.js # Copy text to clipboard hook
 └── react-components/       # Reusable React components
     ├── cacheContext.jsx    # Context for caching functionality (deprecated)
     └── localContext.jsx    # Centralized localStorage management
@@ -76,13 +82,13 @@ npm run dev
 
 A simple, traditional localStorage hook that syncs state with localStorage. Perfect for straightforward use cases.
 
-**Location**: `src/js-hooks/useLocalStorage.js`
+**Location**: `src/react-hooks/useLocalStorage.js`
 
 **Features**: SSR-safe, automatic sync, error handling, supports function updates
 
 **Usage**:
 ```jsx
-import { useLocalStorage } from './js-hooks/useLocalStorage';
+import { useLocalStorage } from './react-hooks/useLocalStorage';
 
 function UserSettings() {
   const [user, setUser] = useLocalStorage('user', { name: '', theme: 'light' });
@@ -97,6 +103,56 @@ function UserSettings() {
       <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
     </div>
   );
+}
+```
+
+### useCopyToClipboard Hook
+
+Copy text to clipboard with fallback support for older browsers. Provides copy status feedback.
+
+**Location**: `src/react-hooks/useCopyToClipboard.js`
+
+**Features**: Modern Clipboard API, fallback for older browsers, copy status tracking
+
+**Usage**:
+```jsx
+import { useCopytoClipboard } from './react-hooks/useCopyToClipboard';
+
+function ShareButton() {
+  const textToCopy = "https://example.com/share";
+  const [isCopied, copy] = useCopytoClipboard(textToCopy);
+
+  return (
+    <button onClick={copy}>
+      {isCopied ? 'Copied!' : 'Copy Link'}
+    </button>
+  );
+}
+```
+
+### copyToClipboard Utility
+
+Vanilla JavaScript function to copy text to clipboard. Promise-based with fallback support.
+
+**Location**: `src/dom-helpers/copyToClipboard.js`
+
+**Features**: Promise-based, modern Clipboard API, fallback for older browsers, return status
+
+**Usage**:
+```javascript
+import { copyToClipboard } from './dom-helpers/copyToClipboard';
+
+// Basic usage
+copyToClipboard('Hello World!')
+  .then(() => console.log('Copy successful'))
+  .catch(() => console.log('Copy failed'));
+
+// In event handler
+async function handleCopy() {
+  const success = await copyToClipboard(document.getElementById('text').value);
+  if (success) {
+    alert('Copied!');
+  }
 }
 ```
 
@@ -154,28 +210,6 @@ This project follows these conventions:
 ## 📄 License
 
 This project is private and for personal use.
-
-### Array Methods
-Collection of utility functions for array manipulation and processing.
-
-**Location**: `src/array-methods/`
-**Status**: 🚧 Coming soon
-
-### String Methods  
-Helper functions for string manipulation, formatting, and validation.
-
-**Location**: `src/string-methods/`
-**Status**: 🚧 Coming soon
-
-## 🚧 Roadmap
-
-- [x] **LocalContext Component** - Centralized localStorage management ✅
-- [ ] Add more React components (forms, modals, buttons)
-- [ ] Expand array utility functions
-- [ ] Add string validation helpers
-- [ ] Add unit tests for LocalContext
-- [ ] Set up Storybook for component showcase
-- [ ] Create TypeScript versions of components
 
 ---
 
