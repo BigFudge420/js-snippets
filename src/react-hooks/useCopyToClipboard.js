@@ -1,14 +1,15 @@
 import { useState, useCallback } from "react";
 
-export function useCopytoClipboard(text){
+export function useCopyToClipboard(){
     const [isCopied, setIsCopied] = useState(false)
 
-    const copy = useCallback(() => {
+    const copy = useCallback((text) => {
         if(navigator.clipboard && window.isSecureContext){
             navigator.clipboard.writeText(text)
             .then(()=>{
                 console.log("Copied")
                 setIsCopied(true)
+                setTimeout(() => setIsCopied(false), 2000)
             })
             .catch((err)=>{
                 console.log("Copy failed:",err)
@@ -27,6 +28,7 @@ export function useCopytoClipboard(text){
                 const success = document.execCommand("copy")
                 success ? console.log("Copied") : console.log("Copy command failed")
                 setIsCopied(success)
+                setTimeout(() => setIsCopied(false), 2000)
             }catch(err){
                 console.log("Copy failed:", err)
                 setIsCopied(false)
@@ -35,7 +37,7 @@ export function useCopytoClipboard(text){
             }
 
         }
-    },[text])
+    },[])
 
     return [isCopied, copy]
 }
