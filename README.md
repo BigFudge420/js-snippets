@@ -6,6 +6,7 @@ A curated collection of reusable JavaScript snippets and React components for mo
 
 - **React Components**: Reusable UI components built with React 19
 - **React Hooks**: Custom hooks for common functionality
+- **Core JavaScript**: Fundamental utility functions (debounce, throttle, etc.)
 - **DOM Utilities**: Vanilla JavaScript helper functions for DOM operations
 - **localStorage Solutions**: Both simple hooks and centralized context management
 - **JavaScript Utilities**: Helper functions for arrays, strings, and more
@@ -20,11 +21,14 @@ A curated collection of reusable JavaScript snippets and React components for mo
 src/
 ├── array-methods/          # Array utility functions and methods
 ├── string-methods/         # String manipulation utilities
+├── core-js/                # Core JavaScript utility functions
+│   └── debounce.js         # Debounce function utility
 ├── dom-helpers/            # DOM utility functions
 │   └── copyToClipboard.js  # Vanilla JS copy to clipboard utility
 ├── react-hooks/            # Reusable React hooks
 │   ├── useLocalStorage.js  # Simple localStorage hook
-│   └── useCopyToClipboard.js # Copy text to clipboard hook
+│   ├── useCopyToClipboard.js # Copy text to clipboard hook
+│   └── useDebounce.js      # Debounce values hook
 └── react-components/       # Reusable React components
     ├── cacheContext.jsx    # Context for caching functionality (deprecated)
     └── localContext.jsx    # Centralized localStorage management
@@ -128,6 +132,68 @@ function ShareButton() {
     </button>
   );
 }
+```
+
+### useDebounce Hook
+
+Debounce state values to prevent excessive updates. Ideal for search inputs and performance optimization.
+
+**Location**: `src/react-hooks/useDebounce.js`
+
+**Features**: State debouncing, automatic cleanup, customizable delay
+
+**Usage**:
+```jsx
+import { useDebounce } from './react-hooks/useDebounce';
+
+function SearchInput() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearch = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    if (debouncedSearch) {
+      // API call only triggers after 500ms of no typing
+      searchAPI(debouncedSearch);
+    }
+  }, [debouncedSearch]);
+
+  return (
+    <input
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+### debounce Utility
+
+Vanilla JavaScript debounce function to limit function execution frequency.
+
+**Location**: `src/core-js/debounce.js`
+
+**Features**: Function debouncing, preserves `this` context, handles arguments
+
+**Usage**:
+```javascript
+import { debounce } from './core-js/debounce';
+
+// Debounce a function
+const debouncedSave = debounce((data) => {
+  console.log('Saving:', data);
+}, 1000);
+
+// Use in event handlers
+window.addEventListener('resize', debounce(() => {
+  console.log('Window resized');
+}, 250));
+
+// Debounce API calls
+const debouncedSearch = debounce(async (query) => {
+  const results = await fetch(`/api/search?q=${query}`);
+  return results.json();
+}, 300);
 ```
 
 ### copyToClipboard Utility
