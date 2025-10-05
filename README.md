@@ -129,6 +129,24 @@ React note: keep core utilities pure. If you need a hook-friendly version (stabl
 
 Robust deep-cloning utility for plain objects, arrays, Maps, Sets, Dates, RegExps and typed arrays. Handles circular references and preserves prototypes and property descriptors where possible. Framework-agnostic.
 
+## deepEquality Utility
+
+A small, framework-agnostic deep equality checker.
+
+- Location: src/core-js/deepEquality.js
+- Purpose: Recursively compares two values for structural equality.
+- Handles:
+  - Primitives and strict equality
+  - Arrays and plain objects (recursive)
+  - Dates and RegExp (compares time/source + flags)
+  - NaN (considers NaN === NaN)
+  - Circular references (uses a WeakMap to avoid infinite recursion)
+- Limitations:
+  - Does not special-case Map, Set, TypedArrays, or ArrayBuffer
+  - Does not preserve/provide prototype/descriptor-level comparisons
+  - Does not compare non-enumerable or symbol-keyed properties
+  - Functions are compared by reference only
+
 ### copyToClipboard Utility
 
 Vanilla JavaScript function to copy text to clipboard. Promise-based with fallback support.

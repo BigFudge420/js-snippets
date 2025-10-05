@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-export function useCopyToClipboard(){
+export const useCopyToClipboard = () => {
     const [isCopied, setIsCopied] = useState(false)
 
     const copy = useCallback((text) => {
