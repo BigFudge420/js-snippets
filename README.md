@@ -143,6 +143,16 @@ Robust deep-cloning utility for plain objects, arrays, Maps, Sets, Dates, RegExp
   - Not SSR-safe (relies on setTimeout / browser timers).
   - Current implementation doesn't track individual timeout handles for cleanup on unmount — consider adding cleanup if toasts may outlive the component.
 
+### usePrevious Hook
+
+- Location: src/react-hooks/usePrevious.js
+- Purpose: Return the previous value of a prop or state across renders.
+- API: `usePrevious(value)` — default export, returns the value from the previous render (undefined on first render).
+- Behavior: stores the value in a ref inside useEffect so it does not trigger re-renders.
+- Notes:
+  - Use only inside React function components or other hooks.
+  - Works with any value type; for objects/arrays it preserves reference equality.
+  - Simple and lightweight utility for comparing current vs previous values.
 
 ### deepEquality Utility
 
@@ -162,7 +172,7 @@ A small, framework-agnostic deep equality checker.
   - Does not compare non-enumerable or symbol-keyed properties
   - Functions are compared by reference only
 
-  ### useOnlineStatus Hook
+### useOnlineStatus Hook
 
   - Location: src/react-hooks/useOnlineStatus.js
   - Purpose: React hook that reports the browser's online/offline status as a boolean.

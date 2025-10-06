@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import {useCopyToClipboard} from '../react-hooks/useCopyToClipboard'
 import '../output.css'
