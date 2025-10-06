@@ -129,7 +129,7 @@ React note: keep core utilities pure. If you need a hook-friendly version (stabl
 
 Robust deep-cloning utility for plain objects, arrays, Maps, Sets, Dates, RegExps and typed arrays. Handles circular references and preserves prototypes and property descriptors where possible. Framework-agnostic.
 
-## deepEquality Utility
+### deepEquality Utility
 
 A small, framework-agnostic deep equality checker.
 
@@ -146,6 +146,16 @@ A small, framework-agnostic deep equality checker.
   - Does not preserve/provide prototype/descriptor-level comparisons
   - Does not compare non-enumerable or symbol-keyed properties
   - Functions are compared by reference only
+
+  ### useOnlineStatus Hook
+
+  - Location: src/react-hooks/useOnlineStatus.js
+  - Purpose: React hook that reports the browser's online/offline status as a boolean.
+  - Behavior: initializes from `navigator.onLine`, listens for `online` / `offline` event and updates state. Event handlers are debounced (200ms) to avoid quick flapping.
+- Notes:
+  - Browser-only (uses `window` / `navigator`) — not SSR-safe without guarding.
+  - Depends on `src/core-js/debounce.js` for debounce behavior.
+  - Cleans up event listeners on unmount.
 
 ### copyToClipboard Utility
 
