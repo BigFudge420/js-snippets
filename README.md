@@ -129,6 +129,21 @@ React note: keep core utilities pure. If you need a hook-friendly version (stabl
 
 Robust deep-cloning utility for plain objects, arrays, Maps, Sets, Dates, RegExps and typed arrays. Handles circular references and preserves prototypes and property descriptors where possible. Framework-agnostic.
 
+### useToast Hook
+
+- Location: src/react-hooks/useToast.js
+- Purpose: Lightweight toast manager hook for React components.
+- API: returns [toasts, debouncedAddToast, addToast]
+  - toasts: array of toast objects { text, id, type, duration }
+  - addToast({ text, id = Date.now(), type = "info", duration = 3000 })
+  - debouncedAddToast: debounced (1s) wrapper around addToast to prevent spam
+- Behavior: addToast appends a toast and automatically removes it after its duration.
+- Notes:
+  - Uses src/core-js/debounce.js for debouncing.
+  - Not SSR-safe (relies on setTimeout / browser timers).
+  - Current implementation doesn't track individual timeout handles for cleanup on unmount — consider adding cleanup if toasts may outlive the component.
+
+
 ### deepEquality Utility
 
 A small, framework-agnostic deep equality checker.
