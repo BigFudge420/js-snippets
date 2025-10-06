@@ -143,6 +143,20 @@ Robust deep-cloning utility for plain objects, arrays, Maps, Sets, Dates, RegExp
   - Not SSR-safe (relies on setTimeout / browser timers).
   - Current implementation doesn't track individual timeout handles for cleanup on unmount — consider adding cleanup if toasts may outlive the component.
 
+  ### useTimeout Hook
+
+- Location: src/react-hooks/useTimeout.js
+- Purpose: Run a callback once after a specified delay inside React components.
+- API: `useTimeout(callback, delay)` — default export.
+- Behavior:
+  - Stores the latest callback in a ref so the scheduled call uses the most recent function.
+  - Starts a timeout when `delay` is a non-negative number.
+  - Clears the timeout on unmount or when `delay` changes.
+- Notes:
+  - Passing a non-number or negative `delay` disables the timeout.
+  - Hook itself returns nothing; consider returning a cancel function if you need manual control.
+  - Browser-only (uses timers) — guard for SSR if used during server render.
+
 ### usePrevious Hook
 
 - Location: src/react-hooks/usePrevious.js
