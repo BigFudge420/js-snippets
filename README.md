@@ -143,6 +143,19 @@ Robust deep-cloning utility for plain objects, arrays, Maps, Sets, Dates, RegExp
   - Not SSR-safe (relies on setTimeout / browser timers).
   - Current implementation doesn't track individual timeout handles for cleanup on unmount — consider adding cleanup if toasts may outlive the component.
 
+  ### useInterval Hook
+
+- Location: src/react-hooks/useInterval.js
+- Purpose: Run a callback repeatedly on a fixed interval inside React components.
+- API: `useInterval(callback, delay)` — default export.
+- Behavior:
+  - Keeps the latest `callback` in a ref to avoid stale closures.
+  - Starts a `setInterval` when `delay` is a non-negative number and clears it on unmount or when `delay` changes.
+- Notes:
+  - Passing a non-number or negative `delay` disables the interval.
+  - Hook returns nothing; add a cancel/pause API if you need manual control.
+  - Browser-only (uses timers) — guard for SSR if required.
+
   ### useTimeout Hook
 
 - Location: src/react-hooks/useTimeout.js
