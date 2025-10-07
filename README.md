@@ -99,6 +99,43 @@ Copy text to clipboard with fallback support for older browsers. Provides copy s
 
 **Features**: Modern Clipboard API, fallback for older browsers, copy status tracking
 
+### memoize Utility
+
+- Location: src/core-js/memoize.js
+- Purpose: Simple memoization utility that caches function results.
+- API: `memoize(func)` — returns a memoized version of the function.
+- Behavior: Uses JSON.stringify(args) as cache key, stores results in a Map.
+- Notes:
+  - Lightweight implementation suitable for functions with serializable arguments.
+  - Does not handle functions, objects with circular references, or non-serializable data as arguments.
+  - Consider a more robust key generation strategy for complex use cases.
+
+### useEventListener Hook
+
+- Location: src/react-hooks/useEventListener.js
+- Purpose: Safely attach event listeners to DOM elements or window in React components.
+- API: `useEventListener(eventName, handler, element)` — default export.
+- Behavior:
+  - Attaches listener to the specified element (defaults to window if not provided).
+  - Keeps the latest handler in a ref to avoid stale closures.
+  - Automatically cleans up listeners on unmount or when dependencies change.
+- Notes:
+  - Browser-only (uses DOM APIs) — guard for SSR if needed.
+  - Handles both element refs and direct DOM elements.
+
+### useHover Hook
+
+- Location: src/react-hooks/useHover.js
+- Purpose: Track hover state of a DOM element in React components.
+- API: `useHover()` — returns [ref, isHovered].
+- Behavior:
+  - Returns a ref to attach to the target element and a boolean hover state.
+  - Uses mouseenter/mouseleave events for accurate hover detection.
+  - Automatically handles cleanup on unmount.
+- Notes:
+  - Browser-only (uses mouse events) — not applicable for SSR.
+  - Attach the returned ref to the element you want to track hover on.
+
 ### useDebounce Hook
 
 Debounce state values to prevent excessive updates. Ideal for search inputs and performance optimization.
